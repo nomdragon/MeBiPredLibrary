@@ -1,9 +1,9 @@
 #!/usr/bin/python
 import sys, os
 import numpy as np
-from keras.models import model_from_json
-from mymetal.load_dicts import precoded_kmer_list, precoded_dict_list
-from mymetal.iof import load_encode
+from tf_keras.models import model_from_json
+from load_dicts import precoded_kmer_list, precoded_dict_list
+from iof import load_encode
 
 # Standalone version just to predict 
 
