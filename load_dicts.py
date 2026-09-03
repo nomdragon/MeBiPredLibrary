@@ -4,7 +4,7 @@
 # Library to prepare dictionaries for machine learning algorithms
 
 import os
-from mymetal.jenks import getJenksBreaks # AA lib
+from jenks import getJenksBreaks # AA lib
 
 
 class amino():

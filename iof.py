@@ -2,11 +2,11 @@
 #
 # By AA Aptekmann, Jul 17 2019, for ENIGMA project at YANALAB-RU
 # Input/Output Functions
-from progress.bar import Bar  # To help alleviate anxiousness during long runs.
 from Bio import SeqIO
 # import parser # AA lib
-import mymetal.encode as encode # AA lib 
+import encode as encode # AA lib 
 import os
+from multiprocessing import Pool
 #set size limit = None for no limit
 s_lim = None
 
@@ -35,19 +35,14 @@ def encode_fasta(fasta, precoded_dict_list, kmer_dict):
     else:
         multi = False    
     if multi:
-        print('Progress bar disabled for multiprocesing large sample.')
-        from multiprocessing import Pool
+        
         pool = Pool()
         encoded = pool.map(unpack, tasks)
         pool.close()
         pool.join()
     else:
-        bar = Bar('Encoding %s' % fasta, max=len(tasks))
-        bar.start()
-        for i in tasks:
-             bar.next() 
-             encoded.append( unpack(i) )
-        bar.finish()     
+        for i in tasks: 
+             encoded.append( unpack(i) )     
     return encoded   
 
 # def check_consistency(fasta, coded_file_handle, precoded_dict_list, kmer_dict, tier=''):

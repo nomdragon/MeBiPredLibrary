@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 from Bio import SeqIO
 import random
-from progress.bar import Bar
 import encode  # AA Lib 
 import test # AA Lib
 from classes import pfam, swissprot, meta_DB
@@ -40,15 +39,12 @@ def sep_by_pfam(filename, metadata, test_set_size, key, value):
     excluded_pfams = set(random.sample(pfam_families, choose ) )
    
     # Iterate data to separate : 
-    bar = Bar('Building record list.', max=len(seq_record_list))
     for record in seq_record_list:
-        bar.next()
         uniprot_code = record.id.split('|')[1]
         if  set(metadata[uniprot_code].PFAM) & excluded_pfams != set():
             test_set.append(record)
         else:
             main_set.append(record)  
-    bar.finish()
     print(len(test_set),len(main_set))
     return main_set, test_set, pfam_families
 
@@ -152,9 +148,7 @@ def sep_by_chain(filename, metadata, pdb_chain):
     mult = []
     unknowns = []
     # Iterate data to separate : 
-    bar = Bar('Building record lists.', max=len(seq_record_list))
     for record in seq_record_list:
-        bar.next()
         if is_protein(record):
             # Parse id
             id = record.id.upper().split('_')
@@ -187,7 +181,6 @@ def sep_by_chain(filename, metadata, pdb_chain):
         else:
             # record is a nucleic acid
             nucleic.append(record)    
-    bar.finish()
 
     mult_pos = [record for record in pos_chain if record.id.upper().split('_')[0] in mult]
     mult_neg = [record for record in neg_chain+neg_pdb if record.id.upper().split('_')[0] in mult]
